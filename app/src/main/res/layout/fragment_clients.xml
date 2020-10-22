@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorScreenBg"
+        android:fitsSystemWindows="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/routSearchView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:background="@drawable/img_search_bg">
+
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:hint="@string/search_name"
+                    android:imeOptions="actionSearch"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:inputType="text"
+                    android:paddingEnd="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textColorHint="@color/colorHint"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_search_user" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtClearSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/routSearchView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:fontFamily="@font/montserrat_regular"
+                android:includeFontPadding="false"
+                android:padding="@dimen/_3sdp"
+                android:text="@string/clear_search"
+                android:textColor="@color/colorPrimaryText"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvClientsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/loadMore"
+                android:layout_below="@+id/txtClearSearch"
+                android:layout_marginTop="@dimen/_6sdp" />
+
+            <LinearLayout
+                android:id="@+id/loadMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:visibility="gone">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/loading_more"
+                    android:textColor="@color/colorPrimaryText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/routEmptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!--            <ImageView-->
+                <!--                android:layout_width="@dimen/_50sdp"-->
+                <!--                android:layout_height="@dimen/_50sdp"-->
+                <!--                android:src="@drawable/ic_nav_my_order" />-->
+
+                <!--            <TextView-->
+                <!--                style="@style/VerySmallFontTextView"-->
+                <!--                android:layout_marginTop="@dimen/_16sdp"-->
+                <!--                android:fontFamily="@font/montserrat_regular"-->
+                <!--                android:text="@string/placeholder_empty_order"-->
+                <!--                android:textColor="@color/colorSecondaryLightText" />-->
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

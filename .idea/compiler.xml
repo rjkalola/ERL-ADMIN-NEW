@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="ERL Admin Git.ERL_Admin_Git.app" target="1.8" />
+      <module name="ERL Admin Git.ERL_Admin_Git.Imagepickers" target="1.8" />
+      <module name="ERL Admin Git.ERL_Admin_Git.Utilities" target="1.8" />
+      <module name="ERL_Admin_Git.app" target="1.8" />
+      <module name="ERL_Admin_Git.Imagepickers" target="1.8" />
+      <module name="ERL_Admin_Git.Utilities" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

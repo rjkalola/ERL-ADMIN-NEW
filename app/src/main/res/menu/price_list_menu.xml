@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/actionArchived"
+        android:icon="@drawable/ic_archived"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/actionNotification"
+        android:icon="@drawable/ic_bell"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/actionSelectedItemCount"
+        android:title=""
+        android:visible="false"
+        app:actionLayout="@layout/layout_toolbar_item_count"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/actionSearch"
+        android:icon="@drawable/ic_search"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="ifRoom|collapseActionView" />
+</menu>

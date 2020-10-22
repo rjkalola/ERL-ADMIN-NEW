@@ -1,0 +1,101 @@
+<resources>
+
+    <string-array name="imageExtension" translatable="false">
+        <item>jpg</item>
+        <item>png</item>
+        <item>jpeg</item>
+    </string-array>
+
+    <string name="app_name" translatable="false">ERL Admin</string>
+    <string name="CHANNEL_ID" translatable="false">ERL</string>
+    <!--    <string name="font_family_regular" translatable="false">sans-serif</string>-->
+    <!--    <string name="font_family_medium" translatable="false">sans-serif-medium</string>-->
+
+    <string name="font_family_regular" translatable="false">fonts/Montserrat-Regular.otf</string>
+    <string name="google_key_api" translatable="false">AIzaSyBcxNZeUe5zUqDVXAvk3fOATaXROrpbUhE</string>
+
+    <string name="error_access_denied">Access Denied</string>
+    <string name="error_bad_request_400">The request could not be understood by the server due to malformed syntax.</string>
+    <string name="error_unauthorized_401">The request requires user authentication. The response MUST include a WWW-Authenticate header field.</string>
+    <string name="error_forbidden_403">The server understood the request but is refusing to fulfill it.</string>
+    <string name="error_not_found_404">The server has not found anything matching the Request-URI.</string>
+    <string name="error_method_not_allowed_405">The method specified in the Request-Line is not allowed for the resource identified by the Request-URI.</string>
+    <string name="error_request_timeout_408">Your request timed out. Please retry the request.</string>
+    <string name="error_request_entity_too_large_413">The server is refusing to process a request because the request entity is larger than the server is willing or able to process.</string>
+    <string name="error_request_uri_too_long_414">The server is refusing to service the request because the Request-URI is longer than the server is willing to interpret.</string>
+    <string name="error_internal_server_error_500">The server encountered an unexpected condition which prevented it from fulfilling the request.</string>
+    <string name="error_unknown">An unknown error occurred</string>
+    <string name="msg_unauthorized">We are signing you out as we found your account access from another device</string>
+    <string name="error_network">There is a problem connecting to the Server, please check your network connection, and then try again.</string>
+    <string name="error_internet_connection">Please check your internet connection</string>
+
+    //Error Strings
+    <!--    <string name="ERR100">Parameters Missing</string>-->
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">Ok</string>
+    <string name="error_empty_password">Please enter password</string>
+    <string name="error_empty_email_or_phone">Please enter email or phone</string>
+    <string name="login">Login</string>
+    <string name="hint_email_or_phone">Email or Phone</string>
+    <string name="hint_password">Password</string>
+
+    <string name="dashboard">Dashboard</string>
+    <string name="offers">Offers</string>
+    <string name="service_items">Service Items</string>
+    <string name="city">City</string>
+    <string name="service_area">Service Area</string>
+    <string name="operating_hours">Operating Hours</string>
+    <string name="service_categories">Service Categories</string>
+    <string name="service_hours">Service Hours</string>
+    <string name="item_mapper">Item Mapper</string>
+    <string name="clients">Clients</string>
+    <string name="riders">Riders</string>
+    <string name="orders">Orders</string>
+    <string name="chat">Chat</string>
+    <string name="our_service">Our Service</string>
+    <string name="store_locator">Store Locator</string>
+    <string name="static_pages">Static Pages</string>
+    <string name="configuration">Configuration</string>
+    <string name="apps">Apps</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="loading_more">Loading more&#8230;</string>
+    <string name="search_name">Search name</string>
+    <string name="add_client">Add Client</string>
+    <string name="save">Save</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_phone">Phone</string>
+
+    <string name="lbl_select_service">Select Service</string>
+    <string name="lbl_skip_item_lazy_order">Skip Item Lazy Order</string>
+    <string name="lbl_price_list">Price List</string>
+    <string name="add_item">Add Item</string>
+    <string name="lbl_display_price">AED %s</string>
+    <string name="error_select_at_least_one_item">Please Select at least 1 item</string>
+    <string name="msg_clear_cart">Are you sure want to change service type? Once you changed service type your cart will be clear.</string>
+    <string name="lbl_address">Address:</string>
+    <string name="lbl_add_client_address">add client address</string>
+    <string name="lbl_order_details">Order Details:</string>
+    <string name="dash_sign">-</string>
+    <string name="lbl_pick_up_time_slot">Pickup time slot</string>
+    <string name="lbl_deliver_time_slot">Deliver time slot</string>
+    <string name="lbl_select_date">Select Date:</string>
+    <string name="lbl_select_time">Select Time:</string>
+    <string name="msg_place_order">Are you sure want to place order?</string>
+    <string name="lbl_order_note">Order Note</string>
+    <string name="hint_enter_order_note">Enter Order notes:</string>
+    <string name="lbl_confirm_order">Confirm Order</string>
+    <string name="lbl_qty">Qty</string>
+    <string name="msg_currently_no_service_available">Currently there are no service available in your area. Please change address</string>
+    <string name="error_empty_order_date">Please select pickup date</string>
+    <string name="error_empty_order_time">Please select pickup time</string>
+    <string name="error_empty_delivery_date">Please select deliver date</string>
+    <string name="error_empty_delivery_time">Please select deliver time</string>
+    <string name="error_empty_address">Please select address</string>
+    <string name="lbl_display_time">%s to %s</string>
+    <string name="clear_search">Clear Search</string>
+
+</resources>

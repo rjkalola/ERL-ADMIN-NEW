@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main" />
+
+        <View
+            android:id="@+id/dividerToolbar"
+            style="@style/ToolbarDivider"
+            android:layout_below="@+id/toolbar" />
+
+        <RelativeLayout
+            android:id="@+id/routMainView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/dividerToolbar"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/routFooterView"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtTitleSelectService"
+                    style="@style/SmallFontTextView"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:gravity="center"
+                    android:text="@string/lbl_select_service"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvServiceHourType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_8sdp" />
+
+                <LinearLayout
+                    android:id="@+id/routPriceView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/SmallFontTextView"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:text="@string/lbl_price_list"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimaryText" />
+
+                    <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/appBarLayoutTabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:background="@color/transparent"
+                        app:elevation="0dp">
+
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tabs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            app:elevation="0dp"
+                            app:tabGravity="center"
+                            app:tabIndicatorColor="@color/colorYellowDark"
+                            app:tabIndicatorHeight="@dimen/_2sdp"
+                            app:tabMode="scrollable"
+                            app:tabSelectedTextColor="@color/colorPrimaryText"
+                            app:tabTextAppearance="@style/CustomTabText"
+                            app:tabTextColor="@color/colorHint" />
+                    </com.google.android.material.appbar.AppBarLayout>
+
+                    <View style="@style/ToolbarDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp">
+
+                        <TextView
+                            android:id="@+id/txtSelectedItemName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/montserrat_semi_bold"
+                            android:singleLine="true"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorYellowDark"
+                            android:textSize="@dimen/_13ssp" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_2sdp"
+                            android:src="@drawable/ic_dry_clean" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_2sdp"
+                            android:src="@drawable/ic_dry_clean_iron" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_weight="1"
+                            android:padding="@dimen/_3sdp"
+                            android:src="@drawable/ic_iron" />
+
+                        <View
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_5sdp" />
+
+                    </LinearLayout>
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/vpOrderItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/routFooterView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginBottom="@dimen/_20sdp">
+
+                <TextView
+                    android:id="@+id/txtLazyOrder"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/img_lazy_order_button_bg"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:gravity="center"
+                    android:text="@string/lbl_skip_item_lazy_order"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/_9ssp" />
+
+                <LinearLayout
+                    android:id="@+id/routCartView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:background="@color/colorBlack"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/_28sdp"
+                        android:layout_height="@dimen/_28sdp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/_4sdp"
+                            android:src="@drawable/ic_selected_item_count"
+                            app:tint="@color/colorWhite" />
+
+                        <TextView
+                            android:id="@+id/txtTotalItemCount"
+                            android:layout_width="@dimen/_11sdp"
+                            android:layout_height="@dimen/_11sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/_3sdp"
+                            android:background="@drawable/img_yellow_circle"
+                            android:fontFamily="@font/montserrat_semi_bold"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="@dimen/_6ssp"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txtTotalPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_9ssp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</layout>

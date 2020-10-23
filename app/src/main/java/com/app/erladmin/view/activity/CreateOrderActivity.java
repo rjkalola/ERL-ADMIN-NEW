@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,12 +26,14 @@ import com.app.erladmin.model.entity.info.ModuleInfo;
 import com.app.erladmin.model.entity.info.ModuleSelection;
 import com.app.erladmin.model.entity.info.PickUpTimeInfo;
 import com.app.erladmin.model.entity.info.ServiceItemInfo;
+import com.app.erladmin.model.entity.response.ModuleResponse;
 import com.app.erladmin.model.entity.response.OrderResourcesResponse;
 import com.app.erladmin.util.AppConstant;
 import com.app.erladmin.util.AppUtils;
 import com.app.erladmin.util.LoginViewModelFactory;
 import com.app.erladmin.util.PopupMenuHelper;
 import com.app.erladmin.util.ResourceProvider;
+import com.app.erladmin.view.dialog.SelectClientDialog;
 import com.app.erladmin.viewModel.DashboardViewModel;
 import com.app.utilities.callbacks.OnDateSetListener;
 import com.app.utilities.utils.AlertDialogHelper;
@@ -59,26 +62,27 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     private ActivityCreateOrderBinding binding;
     private Context mContext;
     private String fromTime, toTime;
-    private int serviceHourTypeId = 0, orderType = 0;
+    private int serviceHourTypeId = 0, orderType = 0, clientId;
     private ServiceSelectedItemsTitleListAdapter adapter;
     private String DATE_PICKER = "DATE_PICKER", DELIVER_DATE_PICKER = "DELIVER_DATE_PICKER";
     private DashboardViewModel dashboardViewModel;
     private OrderResourcesResponse orderData;
     private List<ItemInfo> listItems;
+    private ModuleResponse clientsData;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_order);
         mContext = this;
-        setupToolbar(getString(R.string.lbl_confirm_order),true);
+        setupToolbar(getString(R.string.lbl_confirm_order), true);
         listItems = new ArrayList<>();
         dashboardViewModel = ViewModelProviders.of(this, new LoginViewModelFactory(new ResourceProvider(getResources()))).get(DashboardViewModel.class);
         dashboardViewModel.createView(this);
+        dashboardViewModel.moduleResponse()
+                .observe(this, getAllClientsResponse());
         dashboardViewModel.orderResourcesResponse()
                 .observe(this, orderResourcesResponse());
-//        dashboardViewModel.mBaseResponse()
-//                .observe(this, saveOrderResponse());
 
         binding.txtNext.setOnClickListener(this);
         binding.edtSelectDate.setOnClickListener(this);
@@ -86,6 +90,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         binding.edtSelectDeliverDate.setOnClickListener(this);
         binding.edtSelectDeliverTime.setOnClickListener(this);
         binding.txtChangeAddress.setOnClickListener(this);
+
+        dashboardViewModel.getAllClientsRequest();
 
         getIntentData();
     }
@@ -107,7 +113,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 binding.routOrderList.setVisibility(View.GONE);
             }
 
-            dashboardViewModel.getOrderResourcesRequest();
+//            dashboardViewModel.getOrderResourcesRequest();
         } else {
             finish();
         }
@@ -127,9 +133,9 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     bundle.putInt(AppConstant.IntentKey.SERVICE_HOUR_TYPE_ID, serviceHourTypeId);
                     bundle.putInt(AppConstant.IntentKey.ORDER_TYPE, orderType);
 
-//                    Intent intent = new Intent(mContext, ConfirmOrderActivity.class);
-//                    intent.putExtras(bundle);
-//                    startActivityForResult(intent, AppConstant.IntentKey.VIEW_CART);
+                    Intent intent = new Intent(mContext, ConfirmOrderActivity.class);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, AppConstant.IntentKey.VIEW_CART);
                 }
                 break;
             case R.id.edtSelectDate:
@@ -197,6 +203,9 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.txtChangeAddress:
 //                checkPermission();
+                if (getClientsData() != null && !getClientsData().getInfo().isEmpty()) {
+                    showClientListDialog(AppConstant.DialogIdentifier.SELECT_CLIENT, "", getClientsData().getInfo());
+                }
                 break;
         }
     }
@@ -225,7 +234,9 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 if (response.isSuccess()) {
                     setOrderData(response);
                     binding.edtSelectTime.setText("");
+                    binding.edtSelectDeliverTime.setText("");
                     dashboardViewModel.getSaveOrderRequest().setPickup_hour_id(0);
+                    dashboardViewModel.getSaveOrderRequest().setDeliver_hour_id(0);
                     if (getOrderData().getPickup_hours() != null && getOrderData().getInfo().getId() != 0) {
                         binding.txtAddress.setText(getOrderData().getInfo().getAddress());
                         dashboardViewModel.getSaveOrderRequest().setAddress(getOrderData().getInfo().getAddress());
@@ -243,6 +254,28 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             }
         };
     }
+
+    public Observer getAllClientsResponse() {
+        return (Observer<ModuleResponse>) response -> {
+            try {
+                if (response == null) {
+                    AlertDialogHelper.showDialog(mContext, null,
+                            mContext.getString(R.string.error_unknown), mContext.getString(R.string.ok),
+                            null, false, null, 0);
+                    return;
+                }
+                if (response.isSuccess()) {
+                    setClientsData(response);
+
+                } else {
+                    AppUtils.handleUnauthorized(mContext, response);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
+    }
+
 
     @Override
     public void onSelectServiceItem(int rootPosition, int itemPosition, int quantity) {
@@ -300,14 +333,24 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         PopupMenuHelper.showPopupMenu(mContext, v, list, dialogIdentifier);
     }
 
+    public void showClientListDialog(int type, String title, List<ModuleInfo> list) {
+        FragmentManager fm = getSupportFragmentManager();
+        SelectClientDialog dropdownDialogFragment = SelectClientDialog.newInstance(mContext, title, list, type);
+        dropdownDialogFragment.show(fm, "SelectClientDialog");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-//            case AppConstant.IntentKey.CHANGE_ADDRESS:
-//                if (resultCode == 1)
-//                    dashboardViewModel.getOrderResourcesRequest();
-//                break;
+            case AppConstant.IntentKey.SELECT_ADDRESS:
+                if (resultCode == 1 && data != null) {
+                    dashboardViewModel.getSaveOrderRequest().setClient_id(clientId);
+                    int addressId = data.getIntExtra(AppConstant.IntentKey.ADDRESS_ID, 0);
+                    dashboardViewModel.getOrderResourcesRequest(addressId);
+                }
+
+                break;
             default:
                 break;
         }
@@ -336,6 +379,11 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 binding.edtSelectDeliverTime.setText(moduleInfo.getInfo().getName());
                 dashboardViewModel.getSaveOrderRequest().setDeliver_hour_id(moduleInfo.getInfo().getId());
                 dashboardViewModel.getSaveOrderRequest().setDeliver_hour(moduleInfo.getInfo().getName());
+            } else if (moduleInfo.getType() == AppConstant.DialogIdentifier.SELECT_CLIENT) {
+                clientId = moduleInfo.getInfo().getId();
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppConstant.IntentKey.USER_ID, moduleInfo.getInfo().getId());
+                moveActivityForResult(mContext, SelectAddressActivity.class, false, false, AppConstant.IntentKey.SELECT_ADDRESS, bundle);
             }
         }
     }
@@ -397,5 +445,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     public void setOrderData(OrderResourcesResponse orderData) {
         this.orderData = orderData;
+    }
+
+    public ModuleResponse getClientsData() {
+        return clientsData;
+    }
+
+    public void setClientsData(ModuleResponse clientsData) {
+        this.clientsData = clientsData;
     }
 }

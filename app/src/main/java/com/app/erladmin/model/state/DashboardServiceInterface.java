@@ -2,11 +2,13 @@ package com.app.erladmin.model.state;
 
 
 import com.app.erladmin.model.entity.request.AddClientRequest;
+import com.app.erladmin.model.entity.request.SaveOrderRequest;
+import com.app.erladmin.model.entity.response.AddressListResponse;
 import com.app.erladmin.model.entity.response.BaseResponse;
 import com.app.erladmin.model.entity.response.ClientsResponse;
+import com.app.erladmin.model.entity.response.ModuleResponse;
 import com.app.erladmin.model.entity.response.OrderResourcesResponse;
 import com.app.erladmin.model.entity.response.ServiceItemsResponse;
-import com.app.erladmin.model.entity.response.UserResponse;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -33,6 +35,19 @@ public interface DashboardServiceInterface {
     @GET("get-service-items")
     Observable<ServiceItemsResponse> getServiceItems();
 
-    @GET("order-resources")
-    Observable<OrderResourcesResponse> getOrderResources();
+    @Multipart
+    @POST("working-hours")
+    Observable<OrderResourcesResponse> getOrderResources(@Part("address_id") int address_id);
+
+    @GET("all-clients")
+    Observable<ModuleResponse> getAllClients();
+
+    @Multipart
+    @POST("client-addresses")
+    Observable<AddressListResponse> getAddresses(@Part("client_id") int clientId);
+
+    @POST("place-order")
+    Observable<BaseResponse> placeOrder(@Body SaveOrderRequest saveOrderRequest);
+
+
 }

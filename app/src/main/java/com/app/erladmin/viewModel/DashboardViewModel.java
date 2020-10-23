@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.app.erladmin.ERLApp;
 import com.app.erladmin.model.entity.request.AddClientRequest;
 import com.app.erladmin.model.entity.request.SaveOrderRequest;
+import com.app.erladmin.model.entity.response.AddressListResponse;
 import com.app.erladmin.model.entity.response.BaseResponse;
 import com.app.erladmin.model.entity.response.ClientsResponse;
+import com.app.erladmin.model.entity.response.ModuleResponse;
 import com.app.erladmin.model.entity.response.OrderResourcesResponse;
 import com.app.erladmin.model.entity.response.OrdersResponse;
 import com.app.erladmin.model.entity.response.ServiceItemsResponse;
-import com.app.erladmin.model.entity.response.UserResponse;
 import com.app.erladmin.model.state.DashboardServiceInterface;
 import com.app.erladmin.network.RXRetroManager;
 import com.app.erladmin.network.RetrofitException;
@@ -30,6 +31,8 @@ public class DashboardViewModel extends BaseViewModel {
     private MutableLiveData<OrdersResponse> mOrdersResponse;
     private MutableLiveData<ServiceItemsResponse> serviceItemsResponse;
     private MutableLiveData<OrderResourcesResponse> orderResourcesResponse;
+    private MutableLiveData<ModuleResponse> moduleResponse;
+    private MutableLiveData<AddressListResponse> addressListResponse;
 
     private AddClientRequest addClientRequest;
     private SaveOrderRequest saveOrderRequest;
@@ -92,7 +95,7 @@ public class DashboardViewModel extends BaseViewModel {
         }.rxSingleCall(dashboardServiceInterface.getServiceItems());
     }
 
-    public void getOrderResourcesRequest() {
+    public void getOrderResourcesRequest(int addressId) {
         if (view != null) {
             view.showProgress();
         }
@@ -113,7 +116,79 @@ public class DashboardViewModel extends BaseViewModel {
                     view.hideProgress();
                 }
             }
-        }.rxSingleCall(dashboardServiceInterface.getOrderResources());
+        }.rxSingleCall(dashboardServiceInterface.getOrderResources(addressId));
+    }
+
+    public void getAllClientsRequest() {
+        if (view != null) {
+            view.showProgress();
+        }
+        new RXRetroManager<ModuleResponse>() {
+            @Override
+            protected void onSuccess(ModuleResponse response) {
+                if (view != null) {
+                    moduleResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.getAllClients());
+    }
+
+    public void getAddressesRequest(int clientId) {
+        if (view != null) {
+            view.showProgress();
+        }
+        new RXRetroManager<AddressListResponse>() {
+            @Override
+            protected void onSuccess(AddressListResponse response) {
+                if (view != null) {
+                    addressListResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.getAddresses(clientId));
+    }
+
+    public void saveAddressRequest() {
+        if (view != null) {
+            view.showProgress();
+        }
+        new RXRetroManager<BaseResponse>() {
+            @Override
+            protected void onSuccess(BaseResponse response) {
+                if (view != null) {
+                    mBaseResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.placeOrder(saveOrderRequest));
     }
 
     public MutableLiveData<BaseResponse> mBaseResponse() {
@@ -149,6 +224,20 @@ public class DashboardViewModel extends BaseViewModel {
             orderResourcesResponse = new MutableLiveData<>();
         }
         return orderResourcesResponse;
+    }
+
+    public MutableLiveData<ModuleResponse> moduleResponse() {
+        if (moduleResponse == null) {
+            moduleResponse = new MutableLiveData<>();
+        }
+        return moduleResponse;
+    }
+
+    public MutableLiveData<AddressListResponse> addressListResponse() {
+        if (addressListResponse == null) {
+            addressListResponse = new MutableLiveData<>();
+        }
+        return addressListResponse;
     }
 
     public AddClientRequest getAddClientRequest() {

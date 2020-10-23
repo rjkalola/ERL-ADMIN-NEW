@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.app.erladmin.R;
 import com.app.erladmin.databinding.ActivityDashboardBinding;
 import com.app.erladmin.model.entity.response.BaseResponse;
+import com.app.erladmin.util.AppConstant;
 import com.app.erladmin.util.AppUtils;
 import com.app.erladmin.util.LoginViewModelFactory;
 import com.app.erladmin.util.ResourceProvider;
@@ -32,7 +32,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     private UserAuthenticationViewModel userAuthenticationViewModel;
     private Context mContext;
     private ActionBarDrawerToggle toggle;
-    private int selectedTabIndex = 0;
+    private int tabType = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,8 +57,24 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         binding.navHeader.routClients.setOnClickListener(this);
         binding.navHeader.routOrders.setOnClickListener(this);
 
-        binding.navHeader.routDashBoard.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
-        addFragment(R.id.container, DashboardFragment.newInstance(), false);
+        getIntentData();
+    }
+
+    public void getIntentData() {
+        if (getIntent() != null && getIntent().getExtras() != null && getIntent().hasExtra(AppConstant.IntentKey.TYPE)) {
+            tabType = getIntent().getIntExtra(AppConstant.IntentKey.TYPE, 0);
+            switch (tabType) {
+                case AppConstant.Type.ORDERS_TAB:
+                    binding.navHeader.routOrders.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
+                    binding.appBarLayout.toolBarNavigation.setText(getString(R.string.orders));
+                    addFragment(R.id.container, OrdersFragment.newInstance(), false);
+                    break;
+            }
+        } else {
+            binding.navHeader.routDashBoard.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
+            binding.appBarLayout.toolBarNavigation.setText(getString(R.string.dashboard));
+            addFragment(R.id.container, DashboardFragment.newInstance(), false);
+        }
     }
 
     @Override
@@ -67,16 +83,19 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
             case R.id.routDashBoard:
                 resetNavigationDrawerItemsBg();
                 binding.navHeader.routDashBoard.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
+                binding.appBarLayout.toolBarNavigation.setText(getString(R.string.dashboard));
                 replaceFragment(R.id.container, DashboardFragment.newInstance(), false);
                 break;
             case R.id.routClients:
                 resetNavigationDrawerItemsBg();
                 binding.navHeader.routClients.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
+                binding.appBarLayout.toolBarNavigation.setText(getString(R.string.clients));
                 replaceFragment(R.id.container, ClientsFragment.newInstance(), false);
                 break;
             case R.id.routOrders:
                 resetNavigationDrawerItemsBg();
                 binding.navHeader.routOrders.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
+                binding.appBarLayout.toolBarNavigation.setText(getString(R.string.orders));
                 replaceFragment(R.id.container, OrdersFragment.newInstance(), false);
                 break;
         }

@@ -58,6 +58,18 @@
             android:name=".view.activity.CreateOrderActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".view.activity.SelectAddressActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.activity.OrderCompletedActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

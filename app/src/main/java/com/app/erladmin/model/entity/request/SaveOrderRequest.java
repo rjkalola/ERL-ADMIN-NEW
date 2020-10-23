@@ -10,7 +10,7 @@ import java.util.List;
 
 @Parcel
 public class SaveOrderRequest {
-    int pickup_hour_id, deliver_hour_id, address_id, lu_service_hour_type_id, type, promo_amount, wallet_balance;
+    int pickup_hour_id, deliver_hour_id, address_id, lu_service_hour_type_id, type, promo_amount, wallet_balance,client_id;
     String pickup_date, deliver_date, pickup_hour, deliver_hour, delivery_note, promo_code, address;
     boolean deduct_wallet;
     List<ServiceItemInfo> order = new ArrayList<>();
@@ -141,5 +141,13 @@ public class SaveOrderRequest {
 
     public void setDeliver_hour(String deliver_hour) {
         this.deliver_hour = deliver_hour;
+    }
+
+    public int getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(int client_id) {
+        this.client_id = client_id;
     }
 }

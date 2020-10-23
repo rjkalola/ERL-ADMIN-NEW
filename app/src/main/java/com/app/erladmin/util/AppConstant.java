@@ -20,18 +20,15 @@ public final class AppConstant {
         public static final int SELECT_TIME = 1;
         public static final int CLEAR_CART = 2;
         public static final int SELECT_DELIVER_TIME = 3;
+        public static final int SELECT_CLIENT = 4;
+        public static final int PLACE_ORDER = 5;
     }
 
     public static final class IntentKey {
         public static final String USER_ID = "USER_ID";
-        public static final String VERIFICATION_CODE = "VERIFICATION_CODE";
-        public static final String EMAIL = "EMAIL";
         public static final String POSITION = "POSITION";
-        public static final String DASHBOARD_DATA = "DASHBOARD_DATA";
         public static final String SERVICE_ITEMS_DATA = "SERVICE_ITEMS_DATA";
-        public static final String ADDRESS_DATA = "ADDRESS_DATA";
         public static final String ORDER_DATA = "ORDER_DATA";
-        public static final String IMAGE_PATH = "IMAGE_PATH";
         public static final String IMAGE_URI = "image_uri";
         public static final String CROP_RATIO_X = "crop_ratio_X";
         public static final String CROP_RATIO_Y = "crop_ratio_Y";
@@ -39,16 +36,13 @@ public final class AppConstant {
         public static final String ITEMS_LIST = "ITEMS_LIST";
         public static final String SERVICE_HOUR_TYPE_ID = "SERVICE_HOUR_TYPE_ID";
         public static final String ORDER_TYPE = "ORDER_TYPE";
-        public static final String ORDER_ID = "ORDER_ID";
+        public static final String ADDRESS_ID = "ADDRESS_ID";
         public static final String FROM_PAY = "FROM_PAY";
         public static final String TYPE = "TYPE";
-        public static final String OUR_SERVICE_INFO = "OUR_SERVICE_INFO";
-        public static final String NOTIFICATION_TYPE = "NOTIFICATION_TYPE";
-        public static final String IS_FROM_NOTIFICATION = "IS_FROM_NOTIFICATION";
-        public static final String LAST_MESSAGE_ID = "LAST_MESSAGE_ID";
 
         public static final int PRICE_LIST = 1;
         public static final int VIEW_CART = 2;
+        public static final int SELECT_ADDRESS = 3;
     }
 
     public static final class AppLanguage {
@@ -65,11 +59,7 @@ public final class AppConstant {
         public static final String CAMERA = "camera";
         public static final int ME = 1;
         public static final int FRIEND = 2;
-        public static final int TERMS_CONDITIONS = 1;
-        public static final int PRIVACY_POLICY = 2;
-        public static final int OUR_SERVICES = 3;
-        public static final int ORDER_PICKUPS = 1;
-        public static final int ORDER_DROPS = 2;
+        public static final int ORDERS_TAB = 1;
     }
 
     public static final class LocationMode {

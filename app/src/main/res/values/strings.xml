@@ -30,7 +30,7 @@
     <string name="error_internet_connection">Please check your internet connection</string>
 
     //Error Strings
-    <!--    <string name="ERR100">Parameters Missing</string>-->
+    <string name="ERR100">Parameters Missing</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -97,5 +97,13 @@
     <string name="error_empty_address">Please select address</string>
     <string name="lbl_display_time">%s to %s</string>
     <string name="clear_search">Clear Search</string>
+    <string name="search">Search</string>
+    <string name="select">Select</string>
+    <string name="cancel">Cancel</string>
+    <string name="placeholder_empty_address">No Address Found</string>
+    <string name="select_client_address">Select Client Address</string>
+    <string name="lbl_thank_you">Thank You</string>
+    <string name="msg_your_order_has_been_successfully_placed">Your order has been successfully placed.</string>
+    <string name="lbl_home">Home</string>
 
 </resources>

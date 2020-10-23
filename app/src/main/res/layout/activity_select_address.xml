@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".DashboardActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main" />
+
+        <View
+            android:id="@+id/dividerToolbar"
+            style="@style/ToolbarDivider"
+            android:layout_below="@+id/toolbar" />
+
+        <RelativeLayout
+            android:id="@+id/routDetailsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/dividerToolbar"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtAddressTitle"
+                style="@style/SmallFontTextView"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/lbl_address"
+                android:textColor="@color/colorSecondaryLightText"
+                android:textSize="@dimen/_11ssp" />
+
+            <View
+                android:id="@+id/divider"
+                style="@style/Divider"
+                android:layout_below="@+id/txtAddressTitle"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/colorYellowDark" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAddressList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/divider" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/routEmptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/dividerToolbar"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/img_map_pin_red"
+                app:tint="@color/colorDivider" />
+
+            <TextView
+                style="@style/VerySmallFontTextView"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="@string/placeholder_empty_address"
+                android:textColor="@color/colorSecondaryLightText" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

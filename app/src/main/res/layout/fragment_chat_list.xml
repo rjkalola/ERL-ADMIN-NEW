@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -33,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
                     android:hint="@string/search_name"
-                    android:imeOptions="actionSearch"
+                    android:imeOptions="actionDone"
                     android:inputType="text"
                     android:paddingStart="@dimen/_12sdp"
                     android:paddingEnd="0dp"
@@ -42,37 +43,23 @@
                     android:textColorHint="@color/colorHint"
                     android:textSize="@dimen/_12ssp" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgSearch"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/_2sdp"
                     android:padding="@dimen/_10sdp"
-                    android:src="@drawable/ic_search_user" />
+                    app:srcCompat="@drawable/ic_cancel" />
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/txtClearSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/routSearchView"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/_13sdp"
-                android:fontFamily="@font/montserrat_regular"
-                android:includeFontPadding="false"
-                android:padding="@dimen/_3sdp"
-                android:text="@string/clear_search"
-                android:textColor="@color/colorPrimaryText"
-                android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvClientsList"
+                android:id="@+id/rvChatList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/loadMore"
-                android:layout_below="@+id/txtClearSearch"
+                android:layout_below="@+id/routSearchView"
                 android:layout_marginTop="@dimen/_2sdp" />
 
             <LinearLayout

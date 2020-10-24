@@ -562,6 +562,24 @@
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:background="@drawable/img_navigation_drawer_item_bg"
+                android:clickable="true"
+                android:fontFamily="@font/montserrat_regular"
+                android:includeFontPadding="false"
+                android:paddingStart="@dimen/_25sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="@string/logout"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_11ssp" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

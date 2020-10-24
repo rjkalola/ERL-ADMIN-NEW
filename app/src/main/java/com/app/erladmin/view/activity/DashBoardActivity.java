@@ -1,6 +1,7 @@
 package com.app.erladmin.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.app.erladmin.ERLApp;
 import com.app.erladmin.R;
 import com.app.erladmin.databinding.ActivityDashboardBinding;
 import com.app.erladmin.model.entity.response.BaseResponse;
@@ -20,14 +22,16 @@ import com.app.erladmin.util.AppConstant;
 import com.app.erladmin.util.AppUtils;
 import com.app.erladmin.util.LoginViewModelFactory;
 import com.app.erladmin.util.ResourceProvider;
+import com.app.erladmin.view.fragment.ChatFragment;
 import com.app.erladmin.view.fragment.ClientsFragment;
 import com.app.erladmin.view.fragment.DashboardFragment;
 import com.app.erladmin.view.fragment.OrdersFragment;
 import com.app.erladmin.viewModel.UserAuthenticationViewModel;
+import com.app.utilities.callbacks.DialogButtonClickListener;
 import com.app.utilities.utils.AlertDialogHelper;
 import com.app.utilities.utils.StringHelper;
 
-public class DashBoardActivity extends BaseActivity implements View.OnClickListener {
+public class DashBoardActivity extends BaseActivity implements View.OnClickListener, DialogButtonClickListener {
     private ActivityDashboardBinding binding;
     private UserAuthenticationViewModel userAuthenticationViewModel;
     private Context mContext;
@@ -43,7 +47,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         userAuthenticationViewModel = ViewModelProviders.of(this, new LoginViewModelFactory(new ResourceProvider(getResources()))).get(UserAuthenticationViewModel.class);
         userAuthenticationViewModel.createView(this);
         userAuthenticationViewModel.mBaseResponse()
-                .observe(this, getBaseResponse());
+                .observe(this, logoutResponse());
 
         setSupportActionBar(binding.appBarLayout.toolbar);
         setupToolbar(getString(R.string.dashboard), false);
@@ -56,6 +60,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         binding.navHeader.routDashBoard.setOnClickListener(this);
         binding.navHeader.routClients.setOnClickListener(this);
         binding.navHeader.routOrders.setOnClickListener(this);
+        binding.navHeader.routChat.setOnClickListener(this);
+        binding.navHeader.txtLogout.setOnClickListener(this);
 
         getIntentData();
     }
@@ -98,6 +104,15 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                 binding.appBarLayout.toolBarNavigation.setText(getString(R.string.orders));
                 replaceFragment(R.id.container, OrdersFragment.newInstance(), false);
                 break;
+            case R.id.routChat:
+                resetNavigationDrawerItemsBg();
+                binding.navHeader.routChat.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
+                binding.appBarLayout.toolBarNavigation.setText(getString(R.string.chat));
+                replaceFragment(R.id.container, ChatFragment.newInstance(), false);
+                break;
+            case R.id.txtLogout:
+                AlertDialogHelper.showDialog(mContext, "", getString(R.string.logout_msg), getString(R.string.yes), getString(R.string.no), false, this, AppConstant.DialogIdentifier.LOGOUT);
+                break;
         }
         closeDrawer();
     }
@@ -129,7 +144,7 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    public Observer getBaseResponse() {
+    public Observer logoutResponse() {
         return (Observer<BaseResponse>) response -> {
             try {
                 if (response == null) {
@@ -139,7 +154,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                     return;
                 }
                 if (response.isSuccess()) {
-
+                    ERLApp.get().clearData();
+                    moveActivity(mContext, LoginActivity.class, true, true, null);
                 } else {
                     AppUtils.handleUnauthorized(mContext, response);
                 }
@@ -180,6 +196,24 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         binding.navHeader.routOurService.setBackgroundResource(R.drawable.img_navigation_drawer_item_bg);
         binding.navHeader.routStoreLocator.setBackgroundResource(R.drawable.img_navigation_drawer_item_bg);
         binding.navHeader.routStaticPages.setBackgroundResource(R.drawable.img_navigation_drawer_item_bg);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int dialogIdentifier) {
+        if (dialogIdentifier == AppConstant.DialogIdentifier.LOGOUT) {
+            userAuthenticationViewModel.logoutRequest();
+        }
+    }
+
+    @Override
+    public void onNegativeButtonClicked(int dialogIdentifier) {
+
     }
 
 }

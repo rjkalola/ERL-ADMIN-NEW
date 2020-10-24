@@ -33,27 +33,46 @@
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
                     android:hint="@string/search_name"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
                     android:paddingStart="@dimen/_12sdp"
                     android:paddingEnd="0dp"
+                    android:singleLine="true"
                     android:textColor="@color/colorPrimaryText"
                     android:textColorHint="@color/colorHint"
                     android:textSize="@dimen/_12ssp" />
 
                 <ImageView
+                    android:id="@+id/imgSearch"
                     android:layout_width="@dimen/_32sdp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:padding="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_2sdp"
+                    android:padding="@dimen/_10sdp"
                     android:src="@drawable/ic_search_user" />
 
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/txtClearSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/routSearchView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_13sdp"
+                android:fontFamily="@font/montserrat_regular"
+                android:includeFontPadding="false"
+                android:padding="@dimen/_3sdp"
+                android:text="@string/clear_search"
+                android:textColor="@color/colorPrimaryText"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvClientsList"
+                android:id="@+id/rvOrdersList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/routSearchView" />
+                android:layout_below="@+id/txtClearSearch"
+                android:layout_marginTop="@dimen/_2sdp" />
 
             <LinearLayout
                 android:id="@+id/loadMore"
@@ -87,17 +106,12 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <!--            <ImageView-->
-                <!--                android:layout_width="@dimen/_50sdp"-->
-                <!--                android:layout_height="@dimen/_50sdp"-->
-                <!--                android:src="@drawable/ic_nav_my_order" />-->
-
-                <!--            <TextView-->
-                <!--                style="@style/VerySmallFontTextView"-->
-                <!--                android:layout_marginTop="@dimen/_16sdp"-->
-                <!--                android:fontFamily="@font/montserrat_regular"-->
-                <!--                android:text="@string/placeholder_empty_order"-->
-                <!--                android:textColor="@color/colorSecondaryLightText" />-->
+                <TextView
+                    style="@style/VerySmallFontTextView"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/lbl_empty_orders"
+                    android:textColor="@color/colorSecondaryLightText"
+                    android:textSize="@dimen/_13ssp" />
 
             </LinearLayout>
 

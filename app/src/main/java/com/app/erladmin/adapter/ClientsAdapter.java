@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.erladmin.R;
+import com.app.erladmin.callback.SelectItemListener;
 import com.app.erladmin.databinding.RowClientsBinding;
 import com.app.erladmin.model.entity.info.ClientInfo;
 import com.app.utilities.utils.Constant;
@@ -22,10 +23,12 @@ import java.util.List;
 public class ClientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<ClientInfo> list;
+    private SelectItemListener listener;
 
-    public ClientsAdapter(Context context, List<ClientInfo> list) {
+    public ClientsAdapter(Context context, List<ClientInfo> list,SelectItemListener listener) {
         this.mContext = context;
         this.list = list;
+        this.listener = listener;
     }
 
     @NonNull
@@ -42,6 +45,12 @@ public class ClientsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         itemViewHolder.getData(info);
         setImage(itemViewHolder.binding.imgUser, info.getImage());
         itemViewHolder.binding.txtId.setText("#" + info.getId());
+
+        itemViewHolder.binding.cvMain.setOnClickListener(v -> {
+                if(listener != null){
+                    listener.onSelectItem(position,0);
+                }
+        });
 
 //        if (AppUtils.getPermissionSettings(mContext) != null
 //                && AppUtils.getPermissionSettings(mContext).isDelete_team()) {

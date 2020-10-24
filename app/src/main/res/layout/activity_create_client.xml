@@ -177,7 +177,7 @@
                 </LinearLayout>
 
                 <com.balysv.materialripple.MaterialRippleLayout
-                    android:id="@+id/btnSignUp"
+                    android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_38sdp"
                     android:layout_gravity="center_horizontal"
@@ -191,7 +191,7 @@
                     app:mrl_rippleOverlay="true">
 
                     <TextView
-                        android:id="@+id/txtSignUp"
+                        android:id="@+id/txtSave"
                         style="@style/SmallFont"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

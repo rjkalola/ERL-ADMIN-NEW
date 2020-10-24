@@ -1,9 +1,13 @@
 package com.app.erladmin.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -18,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.erladmin.R;
 import com.app.erladmin.adapter.ClientsAdapter;
+import com.app.erladmin.callback.SelectItemListener;
 import com.app.erladmin.databinding.FragmentClientsBinding;
 import com.app.erladmin.model.entity.info.ClientInfo;
 import com.app.erladmin.model.entity.response.ClientsResponse;
@@ -25,13 +30,17 @@ import com.app.erladmin.util.AppConstant;
 import com.app.erladmin.util.AppUtils;
 import com.app.erladmin.util.LoginViewModelFactory;
 import com.app.erladmin.util.ResourceProvider;
+import com.app.erladmin.view.activity.CreateClientActivity;
+import com.app.erladmin.view.activity.PriceListActivity;
 import com.app.erladmin.viewModel.DashboardViewModel;
 import com.app.utilities.utils.AlertDialogHelper;
 import com.app.utilities.utils.StringHelper;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
-public class ClientsFragment extends BaseFragment implements View.OnClickListener {
+public class ClientsFragment extends BaseFragment implements View.OnClickListener, SelectItemListener {
     private final int LAYOUT_ACTIVITY = R.layout.fragment_clients;
     private FragmentClientsBinding binding;
     private Context mContext;
@@ -73,6 +82,7 @@ public class ClientsFragment extends BaseFragment implements View.OnClickListene
         });
 
         binding.txtClearSearch.setOnClickListener(v -> {
+            offset = 0;
             searchUser = "";
             binding.edtSearch.setText("");
             loadData(true);
@@ -117,7 +127,7 @@ public class ClientsFragment extends BaseFragment implements View.OnClickListene
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
             binding.rvClientsList.setLayoutManager(linearLayoutManager);
             binding.rvClientsList.setHasFixedSize(true);
-            adapter = new ClientsAdapter(mContext, list);
+            adapter = new ClientsAdapter(mContext, list,this);
             binding.rvClientsList.setAdapter(adapter);
             recyclerViewScrollListener(linearLayoutManager);
         } else {
@@ -191,6 +201,45 @@ public class ClientsFragment extends BaseFragment implements View.OnClickListene
 
             }
         };
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.dashboard_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add) {
+            Intent intent = new Intent(mContext, CreateClientActivity.class);
+            startActivityForResult(intent, AppConstant.IntentKey.ADD_CLIENT);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case AppConstant.IntentKey.ADD_CLIENT:
+                if (resultCode == 1) {
+                    offset = 0;
+                    searchUser = "";
+                    binding.edtSearch.setText("");
+                    loadData(true);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onSelectItem(int position, int action) {
+        Intent intent = new Intent(mContext, CreateClientActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(AppConstant.IntentKey.CLIENT_INFO, Parcels.wrap(getClientsData().getInfo().get(position)));
+        intent.putExtras(bundle);
+        startActivityForResult(intent, AppConstant.IntentKey.ADD_CLIENT);
     }
 
     public ClientsResponse getClientsData() {

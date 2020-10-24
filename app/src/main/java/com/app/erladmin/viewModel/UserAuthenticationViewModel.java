@@ -3,7 +3,6 @@ package com.app.erladmin.viewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.app.erladmin.ERLApp;
-import com.app.erladmin.model.entity.request.AddClientRequest;
 import com.app.erladmin.model.entity.request.LoginRequest;
 import com.app.erladmin.model.entity.response.BaseResponse;
 import com.app.erladmin.model.entity.response.UserResponse;
@@ -51,6 +50,30 @@ public class UserAuthenticationViewModel extends BaseViewModel {
                 }
             }
         }.rxSingleCall(userAuthenticationServiceInterface.login(loginRequest));
+    }
+
+    public void logoutRequest() {
+        if (view != null) {
+            view.showProgress();
+        }
+        new RXRetroManager<BaseResponse>() {
+            @Override
+            protected void onSuccess(BaseResponse response) {
+                if (view != null) {
+                    mBaseResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(userAuthenticationServiceInterface.logout());
     }
 
     public MutableLiveData<BaseResponse> mBaseResponse() {

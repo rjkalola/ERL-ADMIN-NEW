@@ -1,9 +1,12 @@
 
 package com.app.erladmin.model.entity.info;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class ClientInfo {
-    private int id;
-    private String name,email,phone,image,wallet;
+    int id;
+    String name, email, phone, image, wallet, password;
 
     public int getId() {
         return id;
@@ -51,6 +54,14 @@ public class ClientInfo {
 
     public void setWallet(String wallet) {
         this.wallet = wallet;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

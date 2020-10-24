@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,13 +8,17 @@
 
 
         <variable
-            name="clientInfo"
-            type="com.app.erladmin.model.entity.info.ClientInfo" />
+            name="orderInfo"
+            type="com.app.erladmin.model.entity.info.OrderInfo" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_8sdp">
 
         <LinearLayout
             android:id="@+id/parentView"
@@ -31,49 +36,60 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
-                <ImageView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:fontFamily="@font/montserrat_medium"
+                    android:fontFamily="@font/montserrat_semi_bold"
                     android:includeFontPadding="false"
-                    android:text="@{clientInfo.name}"
+                    android:text="@{orderInfo.name}"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgOrderStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/txtOrderStatus"
+                        android:layout_alignTop="@+id/txtOrderStatus"
+                        android:layout_alignEnd="@+id/txtOrderStatus"
+                        android:layout_alignBottom="@+id/txtOrderStatus"
+                        app:srcCompat="@drawable/img_order_status_bg" />
+
+                    <TextView
+                        android:id="@+id/txtOrderStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:includeFontPadding="false"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_3sdp"
+                        android:text="@{orderInfo.status}"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_9ssp" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtOrderNumber"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:includeFontPadding="false"
-                    android:text="ID : "
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_10ssp" />
-
-                <TextView
-                    android:id="@+id/txtId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:includeFontPadding="false"
-                    android:text='@{String.valueOf(clientInfo.id)}'
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_10ssp" />
-
-            </LinearLayout>
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/montserrat_regular"
+                android:includeFontPadding="false"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/_11ssp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,21 +100,31 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
+                    android:fontFamily="@font/montserrat_regular"
                     android:includeFontPadding="false"
-                    android:text="E - "
+                    android:text="@{orderInfo.order_type}"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <TextView
-                    android:id="@+id/txtEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:includeFontPadding="false"
+                    android:text="@string/dash_sign"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
                     android:includeFontPadding="false"
-                    android:text="@{clientInfo.email}"
+                    android:text="@{orderInfo.total_price}"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
             </LinearLayout>
 
@@ -112,43 +138,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:fontFamily="@font/montserrat_medium"
+                    android:fontFamily="@font/montserrat_semi_bold"
                     android:includeFontPadding="false"
                     android:text="P - "
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <TextView
-                    android:id="@+id/txtPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/txtPhoneTitle"
                     android:fontFamily="@font/montserrat_regular"
                     android:includeFontPadding="false"
-                    android:text="@{clientInfo.phone}"
+                    android:text="@{orderInfo.phone}"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_10ssp" />
-
-                <ImageView
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/_7sdp"
-                    android:layout_toStartOf="@+id/txtAmount"
-                    android:src="@drawable/ic_client_wallet" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <TextView
-                    android:id="@+id/txtAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/montserrat_regular"
                     android:includeFontPadding="false"
-                    android:text="100"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_10ssp" />
+                    android:text="@{orderInfo.ordered_at}"
+                    android:textColor="@color/colorSecondaryLightText"
+                    android:textSize="@dimen/_11ssp" />
 
             </RelativeLayout>
         </LinearLayout>

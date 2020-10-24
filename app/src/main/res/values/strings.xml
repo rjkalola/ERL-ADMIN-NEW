@@ -38,6 +38,7 @@
     <string name="error_empty_password">Please enter password</string>
     <string name="error_empty_email_or_phone">Please enter email or phone</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="hint_email_or_phone">Email or Phone</string>
     <string name="hint_password">Password</string>
 
@@ -105,5 +106,17 @@
     <string name="lbl_thank_you">Thank You</string>
     <string name="msg_your_order_has_been_successfully_placed">Your order has been successfully placed.</string>
     <string name="lbl_home">Home</string>
+    <string name="lbl_display_order_no">Order No: %s</string>
+    <string name="lbl_empty_clients">No Client Found</string>
+    <string name="lbl_empty_orders">No Order Found</string>
+    <string name="update_client">Update Client</string>
+    <string name="error_empty_name">Please enter name</string>
+    <string name="error_empty_phone">Please enter phone number</string>
+    <string name="error_invalid_email">Please enter valid email</string>
+    <string name="error_empty_email">Please enter email</string>
+    <string name="logout_msg">Are you sure you want to logout?</string>
+    <string name="hint_say_something">Say Something&#8230;</string>
+    <string name="msg_storage_permission">This application needs access to your storage</string>
+    <string name="error_image_format">Invalid file format. Please choose the JPG,PNG and JPEG format</string>
 
 </resources>

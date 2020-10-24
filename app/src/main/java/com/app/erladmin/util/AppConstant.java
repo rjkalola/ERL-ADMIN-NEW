@@ -22,6 +22,7 @@ public final class AppConstant {
         public static final int SELECT_DELIVER_TIME = 3;
         public static final int SELECT_CLIENT = 4;
         public static final int PLACE_ORDER = 5;
+        public static final int LOGOUT = 6;
     }
 
     public static final class IntentKey {
@@ -39,10 +40,17 @@ public final class AppConstant {
         public static final String ADDRESS_ID = "ADDRESS_ID";
         public static final String FROM_PAY = "FROM_PAY";
         public static final String TYPE = "TYPE";
+        public static final String CLIENT_INFO = "CLIENT_INFO";
+        public static final String IS_FROM_NOTIFICATION = "IS_FROM_NOTIFICATION";
 
         public static final int PRICE_LIST = 1;
         public static final int VIEW_CART = 2;
         public static final int SELECT_ADDRESS = 3;
+        public static final int ADD_CLIENT = 4;
+        public static final int EXTERNAL_STORAGE_PERMISSION = 5;
+        public static final int REQUEST_GALLERY = 6;
+
+
     }
 
     public static final class AppLanguage {

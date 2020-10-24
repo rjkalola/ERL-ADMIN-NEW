@@ -3,10 +3,11 @@ package com.app.erladmin.viewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.app.erladmin.ERLApp;
-import com.app.erladmin.model.entity.request.AddClientRequest;
+import com.app.erladmin.model.entity.info.ClientInfo;
 import com.app.erladmin.model.entity.request.SaveOrderRequest;
 import com.app.erladmin.model.entity.response.AddressListResponse;
 import com.app.erladmin.model.entity.response.BaseResponse;
+import com.app.erladmin.model.entity.response.ChatListResponse;
 import com.app.erladmin.model.entity.response.ClientsResponse;
 import com.app.erladmin.model.entity.response.ModuleResponse;
 import com.app.erladmin.model.entity.response.OrderResourcesResponse;
@@ -33,13 +34,14 @@ public class DashboardViewModel extends BaseViewModel {
     private MutableLiveData<OrderResourcesResponse> orderResourcesResponse;
     private MutableLiveData<ModuleResponse> moduleResponse;
     private MutableLiveData<AddressListResponse> addressListResponse;
+    private MutableLiveData<ChatListResponse> chatListResponse;
 
-    private AddClientRequest addClientRequest;
+    private ClientInfo addClientRequest;
     private SaveOrderRequest saveOrderRequest;
 
     public DashboardViewModel(ResourceProvider resourceProvider) {
         ERLApp.getServiceComponent().inject(this);
-        addClientRequest = new AddClientRequest();
+        addClientRequest = new ClientInfo();
         saveOrderRequest = new SaveOrderRequest();
     }
 
@@ -69,6 +71,34 @@ public class DashboardViewModel extends BaseViewModel {
                 }
             }
         }.rxSingleCall(dashboardServiceInterface.getClients(limitBody, offsetBody, searchBody));
+    }
+
+    public void getOrdersRequest(boolean isProgress, int limit, int offset, String search) {
+        RequestBody limitBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(limit));
+        RequestBody offsetBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(offset));
+        RequestBody searchBody = RequestBody.create(MediaType.parse("text/plain"), search);
+
+        if (view != null && isProgress) {
+            view.showProgress();
+        }
+        new RXRetroManager<OrdersResponse>() {
+            @Override
+            protected void onSuccess(OrdersResponse response) {
+                if (view != null) {
+                    mOrdersResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.getOrders(limitBody, offsetBody, searchBody));
     }
 
     public void getServiceItemsRequest() {
@@ -191,6 +221,54 @@ public class DashboardViewModel extends BaseViewModel {
         }.rxSingleCall(dashboardServiceInterface.placeOrder(saveOrderRequest));
     }
 
+    public void storeClientRequest() {
+        if (view != null) {
+            view.showProgress();
+        }
+        new RXRetroManager<BaseResponse>() {
+            @Override
+            protected void onSuccess(BaseResponse response) {
+                if (view != null) {
+                    mBaseResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.storeClient(addClientRequest));
+    }
+
+    public void getChatListRequest(boolean isProgress) {
+        if (view != null && isProgress) {
+            view.showProgress();
+        }
+        new RXRetroManager<ChatListResponse>() {
+            @Override
+            protected void onSuccess(ChatListResponse response) {
+                if (view != null) {
+                    chatListResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.getChatList());
+    }
+
     public MutableLiveData<BaseResponse> mBaseResponse() {
         if (mBaseResponse == null) {
             mBaseResponse = new MutableLiveData<>();
@@ -240,11 +318,18 @@ public class DashboardViewModel extends BaseViewModel {
         return addressListResponse;
     }
 
-    public AddClientRequest getAddClientRequest() {
+    public MutableLiveData<ChatListResponse> chatListResponse() {
+        if (chatListResponse == null) {
+            chatListResponse = new MutableLiveData<>();
+        }
+        return chatListResponse;
+    }
+
+    public ClientInfo getAddClientRequest() {
         return addClientRequest;
     }
 
-    public void setAddClientRequest(AddClientRequest addClientRequest) {
+    public void setAddClientRequest(ClientInfo addClientRequest) {
         this.addClientRequest = addClientRequest;
     }
 

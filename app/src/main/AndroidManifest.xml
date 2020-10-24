@@ -70,6 +70,10 @@
             android:name=".view.activity.OrderCompletedActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".view.activity.CreateClientActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

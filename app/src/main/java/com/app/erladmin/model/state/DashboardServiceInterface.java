@@ -1,13 +1,15 @@
 package com.app.erladmin.model.state;
 
 
-import com.app.erladmin.model.entity.request.AddClientRequest;
+import com.app.erladmin.model.entity.info.ClientInfo;
 import com.app.erladmin.model.entity.request.SaveOrderRequest;
 import com.app.erladmin.model.entity.response.AddressListResponse;
 import com.app.erladmin.model.entity.response.BaseResponse;
+import com.app.erladmin.model.entity.response.ChatListResponse;
 import com.app.erladmin.model.entity.response.ClientsResponse;
 import com.app.erladmin.model.entity.response.ModuleResponse;
 import com.app.erladmin.model.entity.response.OrderResourcesResponse;
+import com.app.erladmin.model.entity.response.OrdersResponse;
 import com.app.erladmin.model.entity.response.ServiceItemsResponse;
 
 import io.reactivex.Observable;
@@ -25,11 +27,11 @@ public interface DashboardServiceInterface {
             , @Part("offset") RequestBody offset, @Part("search") RequestBody search);
 
     @POST("store-client")
-    Observable<BaseResponse> storeClient(@Body AddClientRequest addClientRequest);
+    Observable<BaseResponse> storeClient(@Body ClientInfo addClientRequest);
 
     @Multipart
     @POST("orders")
-    Observable<ClientsResponse> getOrders(@Part("limit") RequestBody limit
+    Observable<OrdersResponse> getOrders(@Part("limit") RequestBody limit
             , @Part("offset") RequestBody offset, @Part("search") RequestBody search);
 
     @GET("get-service-items")
@@ -49,5 +51,6 @@ public interface DashboardServiceInterface {
     @POST("place-order")
     Observable<BaseResponse> placeOrder(@Body SaveOrderRequest saveOrderRequest);
 
-
+    @GET("chat-lists")
+    Observable<ChatListResponse> getChatList();
 }

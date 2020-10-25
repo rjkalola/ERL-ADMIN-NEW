@@ -67,7 +67,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemViewHolder.txtMsg.setText(info.getMessage());
         }
 
-        itemViewHolder.parentView.setOnClickListener(v -> {
+        itemViewHolder.imgChat.setOnClickListener(v -> {
             if (listener != null)
                 listener.onSelectItem(position, AppConstant.Action.PREVIEW_IMAGE);
         });

@@ -7,12 +7,15 @@ import com.app.erladmin.model.entity.response.AddressListResponse;
 import com.app.erladmin.model.entity.response.BaseResponse;
 import com.app.erladmin.model.entity.response.ChatListResponse;
 import com.app.erladmin.model.entity.response.ClientsResponse;
+import com.app.erladmin.model.entity.response.GetMessagesResponse;
 import com.app.erladmin.model.entity.response.ModuleResponse;
 import com.app.erladmin.model.entity.response.OrderResourcesResponse;
 import com.app.erladmin.model.entity.response.OrdersResponse;
+import com.app.erladmin.model.entity.response.SendMessageResponse;
 import com.app.erladmin.model.entity.response.ServiceItemsResponse;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -53,4 +56,12 @@ public interface DashboardServiceInterface {
 
     @GET("chat-lists")
     Observable<ChatListResponse> getChatList();
+
+    @Multipart
+    @POST("send-message")
+    Observable<SendMessageResponse> sendMessage(@Part("to_user_id") RequestBody to_user_id,@Part("message") RequestBody message, @Part MultipartBody.Part image);
+
+    @Multipart
+    @POST("messages")
+    Observable<GetMessagesResponse> getMessages(@Part("to_user_id") int to_user_id,@Part("last_message_id") int last_message_id);
 }

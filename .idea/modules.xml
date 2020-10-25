@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ERL_Admin_Git.iml" filepath="$PROJECT_DIR$/.idea/modules/ERL_Admin_Git.iml" group="ERL_Admin_Git" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ERL_Admin_Git_New.iml" filepath="$PROJECT_DIR$/.idea/modules/ERL_Admin_Git_New.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Imagepickers/ERL_Admin_Git_New.Imagepickers.iml" filepath="$PROJECT_DIR$/.idea/modules/Imagepickers/ERL_Admin_Git_New.Imagepickers.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Utilities/ERL_Admin_Git_New.Utilities.iml" filepath="$PROJECT_DIR$/.idea/modules/Utilities/ERL_Admin_Git_New.Utilities.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ERL_Admin_Git_New.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ERL_Admin_Git_New.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Imagepickers/Imagepickers.iml" filepath="$PROJECT_DIR$/.idea/modules/Imagepickers/Imagepickers.iml" group="ERL Admin Git/Imagepickers" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Utilities/Utilities.iml" filepath="$PROJECT_DIR$/.idea/modules/Utilities/Utilities.iml" group="ERL Admin Git/Utilities" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="ERL Admin Git/app" />
     </modules>
   </component>
 </project>

@@ -30,6 +30,7 @@ import com.app.erladmin.viewModel.UserAuthenticationViewModel;
 import com.app.utilities.callbacks.DialogButtonClickListener;
 import com.app.utilities.utils.AlertDialogHelper;
 import com.app.utilities.utils.StringHelper;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class DashBoardActivity extends BaseActivity implements View.OnClickListener, DialogButtonClickListener {
     private ActivityDashboardBinding binding;
@@ -48,6 +49,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         userAuthenticationViewModel.createView(this);
         userAuthenticationViewModel.mBaseResponse()
                 .observe(this, logoutResponse());
+        userAuthenticationViewModel.mRegisterFcmResponse()
+                .observe(this, registerFcmResponse());
 
         setSupportActionBar(binding.appBarLayout.toolbar);
         setupToolbar(getString(R.string.dashboard), false);
@@ -64,6 +67,8 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         binding.navHeader.txtLogout.setOnClickListener(this);
 
         getIntentData();
+
+        getFcmToken();
     }
 
     public void getIntentData() {
@@ -164,6 +169,39 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
         };
     }
 
+    public Observer registerFcmResponse() {
+        return (Observer<BaseResponse>) response -> {
+            try {
+                if (response == null) {
+                    AlertDialogHelper.showDialog(mContext, null,
+                            mContext.getString(R.string.error_unknown), mContext.getString(R.string.ok),
+                            null, false, null, 0);
+                    return;
+                }
+                if (response.isSuccess()) {
+
+                } else {
+                    AppUtils.handleUnauthorized(mContext, response);
+                }
+            } catch (Exception e) {
+            }
+        };
+    }
+
+    public void getFcmToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        return;
+                    }
+//                    User user = AppUtils.getUserPrefrence(mContext);
+                    String fcmToken = task.getResult().getToken();
+                    if (!StringHelper.isEmpty(fcmToken)) {
+                        userAuthenticationViewModel.registerFcmRequest(fcmToken);
+                    }
+                });
+    }
+
     public void navigationItemClick(int id) {
         switch (id) {
             case R.id.routDashBoard:
@@ -215,5 +253,6 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
     public void onNegativeButtonClicked(int dialogIdentifier) {
 
     }
+
 
 }

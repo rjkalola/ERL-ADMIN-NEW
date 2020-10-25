@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class ChatUserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    private List<ChatUserInfo> list,listUsers;
+    private List<ChatUserInfo> list, listUsers;
     private SelectItemListener listener;
 
     public ChatUserListAdapter(Context context, List<ChatUserInfo> list, SelectItemListener listener) {
@@ -51,6 +51,13 @@ public class ChatUserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ChatUserInfo info = list.get(position);
         itemViewHolder.getData(info);
         setImage(itemViewHolder.binding.imgUser, info.getImage());
+
+        if (info.getUn_read_msg_count() > 0) {
+            itemViewHolder.binding.txtUnreadCount.setVisibility(View.VISIBLE);
+            itemViewHolder.binding.txtUnreadCount.setText(String.valueOf(info.getUn_read_msg_count()));
+        } else {
+            itemViewHolder.binding.txtUnreadCount.setVisibility(View.GONE);
+        }
 
         itemViewHolder.binding.cvMain.setOnClickListener(v -> {
             if (listener != null) {

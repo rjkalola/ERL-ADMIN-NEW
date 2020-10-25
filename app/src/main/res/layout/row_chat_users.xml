@@ -19,15 +19,15 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_8sdp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imgUser"
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_45sdp"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_12sdp" />
@@ -35,7 +35,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/txtUnreadCount"
+                android:layout_toEndOf="@+id/imgUser"
                 android:orientation="vertical">
 
                 <TextView
@@ -52,19 +56,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginEnd="@dimen/_14sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_regular"
                     android:includeFontPadding="false"
                     android:singleLine="true"
-                    android:layout_marginEnd="@dimen/_14sdp"
                     android:text="@{info.message}"
                     android:textColor="@color/colorSecondaryLightText"
                     android:textSize="@dimen/_11ssp" />
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtUnreadCount"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/_9ssp"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/montserrat_regular"
+                android:includeFontPadding="false"
+                android:layout_centerVertical="true"
+                android:background="@drawable/img_yellow_circle" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -9,18 +9,24 @@ import com.app.erladmin.model.entity.response.AddressListResponse;
 import com.app.erladmin.model.entity.response.BaseResponse;
 import com.app.erladmin.model.entity.response.ChatListResponse;
 import com.app.erladmin.model.entity.response.ClientsResponse;
+import com.app.erladmin.model.entity.response.GetMessagesResponse;
 import com.app.erladmin.model.entity.response.ModuleResponse;
 import com.app.erladmin.model.entity.response.OrderResourcesResponse;
 import com.app.erladmin.model.entity.response.OrdersResponse;
+import com.app.erladmin.model.entity.response.SendMessageResponse;
 import com.app.erladmin.model.entity.response.ServiceItemsResponse;
 import com.app.erladmin.model.state.DashboardServiceInterface;
 import com.app.erladmin.network.RXRetroManager;
 import com.app.erladmin.network.RetrofitException;
 import com.app.erladmin.util.ResourceProvider;
+import com.app.utilities.utils.StringHelper;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class DashboardViewModel extends BaseViewModel {
@@ -35,6 +41,8 @@ public class DashboardViewModel extends BaseViewModel {
     private MutableLiveData<ModuleResponse> moduleResponse;
     private MutableLiveData<AddressListResponse> addressListResponse;
     private MutableLiveData<ChatListResponse> chatListResponse;
+    private MutableLiveData<SendMessageResponse> mSendMessageResponse;
+    private MutableLiveData<GetMessagesResponse> getMessagesResponse;
 
     private ClientInfo addClientRequest;
     private SaveOrderRequest saveOrderRequest;
@@ -269,6 +277,64 @@ public class DashboardViewModel extends BaseViewModel {
         }.rxSingleCall(dashboardServiceInterface.getChatList());
     }
 
+    public void sendMessage(int toUserId,String message, String imagePath, boolean isProgress) {
+        RequestBody messageBody = RequestBody.create(MediaType.parse("text/plain"), message);
+        RequestBody toUserIdBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(toUserId));
+
+        MultipartBody.Part imageFileBody = null;
+        if (!StringHelper.isEmpty(imagePath)) {
+            File file = new File(imagePath);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            imageFileBody = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+        }
+
+        if (view != null && isProgress) {
+            view.showProgress();
+        }
+        new RXRetroManager<SendMessageResponse>() {
+            @Override
+            protected void onSuccess(SendMessageResponse response) {
+                if (view != null) {
+                    mSendMessageResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.sendMessage(toUserIdBody,messageBody, imageFileBody));
+    }
+
+    public void getMessages(int toUserId,int lastMessageId, boolean isProgress) {
+        if (view != null && isProgress) {
+            view.showProgress();
+        }
+        new RXRetroManager<GetMessagesResponse>() {
+            @Override
+            protected void onSuccess(GetMessagesResponse response) {
+                if (view != null) {
+                    getMessagesResponse.postValue(response);
+                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(dashboardServiceInterface.getMessages(toUserId,lastMessageId));
+    }
+
     public MutableLiveData<BaseResponse> mBaseResponse() {
         if (mBaseResponse == null) {
             mBaseResponse = new MutableLiveData<>();
@@ -323,6 +389,20 @@ public class DashboardViewModel extends BaseViewModel {
             chatListResponse = new MutableLiveData<>();
         }
         return chatListResponse;
+    }
+
+    public MutableLiveData<SendMessageResponse> mSendMessageResponse() {
+        if (mSendMessageResponse == null) {
+            mSendMessageResponse = new MutableLiveData<>();
+        }
+        return mSendMessageResponse;
+    }
+
+    public MutableLiveData<GetMessagesResponse> getMessagesResponse() {
+        if (getMessagesResponse == null) {
+            getMessagesResponse = new MutableLiveData<>();
+        }
+        return getMessagesResponse;
     }
 
     public ClientInfo getAddClientRequest() {

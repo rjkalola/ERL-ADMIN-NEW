@@ -9,9 +9,13 @@ import com.app.erladmin.model.entity.response.UserResponse;
 import com.app.erladmin.model.state.UserAuthenticationServiceInterface;
 import com.app.erladmin.network.RXRetroManager;
 import com.app.erladmin.network.RetrofitException;
+import com.app.erladmin.util.AppConstant;
 import com.app.erladmin.util.ResourceProvider;
 
 import javax.inject.Inject;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class UserAuthenticationViewModel extends BaseViewModel {
     @Inject
@@ -19,6 +23,7 @@ public class UserAuthenticationViewModel extends BaseViewModel {
 
     private MutableLiveData<UserResponse> mUserResponse;
     private MutableLiveData<BaseResponse> mBaseResponse;
+    private MutableLiveData<BaseResponse> mRegisterFcmResponse;
     private LoginRequest loginRequest;
 
 
@@ -76,6 +81,34 @@ public class UserAuthenticationViewModel extends BaseViewModel {
         }.rxSingleCall(userAuthenticationServiceInterface.logout());
     }
 
+    public void registerFcmRequest(String token) {
+        RequestBody tokenBody = RequestBody.create(MediaType.parse("text/plain"), token);
+        RequestBody deviceTypeBody = RequestBody.create(MediaType.parse("text/plain"), AppConstant.DEVICE_TYPE);
+
+//        if (view != null) {
+//            view.showProgress();
+//        }
+        new RXRetroManager<BaseResponse>() {
+            @Override
+            protected void onSuccess(BaseResponse response) {
+                if (view != null) {
+                    mRegisterFcmResponse.postValue(response);
+//                    view.hideProgress();
+                }
+            }
+
+            @Override
+            protected void onFailure(RetrofitException retrofitException, String errorCode) {
+                super.onFailure(retrofitException, errorCode);
+                if (view != null) {
+                    view.showApiError(retrofitException, errorCode);
+//                    view.hideProgress();
+                }
+            }
+        }.rxSingleCall(userAuthenticationServiceInterface.registerToken(tokenBody, deviceTypeBody));
+
+    }
+
     public MutableLiveData<BaseResponse> mBaseResponse() {
         if (mBaseResponse == null) {
             mBaseResponse = new MutableLiveData<>();
@@ -88,6 +121,13 @@ public class UserAuthenticationViewModel extends BaseViewModel {
             mUserResponse = new MutableLiveData<>();
         }
         return mUserResponse;
+    }
+
+    public MutableLiveData<BaseResponse> mRegisterFcmResponse() {
+        if (mRegisterFcmResponse == null) {
+            mRegisterFcmResponse = new MutableLiveData<>();
+        }
+        return mRegisterFcmResponse;
     }
 
     public LoginRequest getLoginRequest() {

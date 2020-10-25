@@ -27,6 +27,7 @@ public final class AppConstant {
 
     public static final class IntentKey {
         public static final String USER_ID = "USER_ID";
+        public static final String USER_NAME = "USER_NAME";
         public static final String POSITION = "POSITION";
         public static final String SERVICE_ITEMS_DATA = "SERVICE_ITEMS_DATA";
         public static final String ORDER_DATA = "ORDER_DATA";
@@ -42,6 +43,7 @@ public final class AppConstant {
         public static final String TYPE = "TYPE";
         public static final String CLIENT_INFO = "CLIENT_INFO";
         public static final String IS_FROM_NOTIFICATION = "IS_FROM_NOTIFICATION";
+        public static final String NOTIFICATION_TYPE = "NOTIFICATION_TYPE";
 
         public static final int PRICE_LIST = 1;
         public static final int VIEW_CART = 2;
@@ -49,6 +51,7 @@ public final class AppConstant {
         public static final int ADD_CLIENT = 4;
         public static final int EXTERNAL_STORAGE_PERMISSION = 5;
         public static final int REQUEST_GALLERY = 6;
+        public static final int VIEW_CHAT = 7;
 
 
     }

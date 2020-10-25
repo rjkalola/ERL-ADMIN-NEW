@@ -4,7 +4,6 @@
 
     <data>
 
-
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -68,6 +67,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_14sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
+                android:visibility="gone"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="@string/configuration"
                 android:textAllCaps="true"
@@ -77,6 +77,7 @@
             <LinearLayout
                 android:id="@+id/routOffers"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
@@ -113,6 +114,7 @@
                 android:clickable="true"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_25sdp"
+                android:visibility="gone"
                 android:paddingTop="@dimen/_9sdp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="@dimen/_9sdp">
@@ -140,6 +142,7 @@
                 android:id="@+id/routCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -170,6 +173,7 @@
             <LinearLayout
                 android:id="@+id/routServiceArea"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
@@ -202,6 +206,7 @@
                 android:id="@+id/routOperatingHours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -232,6 +237,7 @@
             <LinearLayout
                 android:id="@+id/routServiceCategories"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
@@ -270,6 +276,7 @@
                 android:paddingStart="@dimen/_25sdp"
                 android:paddingTop="@dimen/_9sdp"
                 android:paddingEnd="0dp"
+                android:visibility="gone"
                 android:paddingBottom="@dimen/_9sdp">
 
                 <ImageView
@@ -294,6 +301,7 @@
             <LinearLayout
                 android:id="@+id/routItemMapper"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
@@ -369,6 +377,7 @@
                 android:id="@+id/routRiders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -464,6 +473,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_14sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
+                android:visibility="gone"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="@string/static_pages"
                 android:textAllCaps="true"
@@ -480,6 +490,7 @@
                 android:paddingStart="@dimen/_25sdp"
                 android:paddingTop="@dimen/_9sdp"
                 android:paddingEnd="0dp"
+                android:visibility="gone"
                 android:paddingBottom="@dimen/_9sdp">
 
                 <ImageView
@@ -505,6 +516,7 @@
                 android:id="@+id/routStoreLocator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -536,6 +548,7 @@
                 android:id="@+id/routStaticPages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/img_navigation_drawer_item_bg"
                 android:clickable="true"
                 android:gravity="center_vertical"

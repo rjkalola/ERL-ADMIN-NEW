@@ -17,6 +17,7 @@ import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -35,6 +36,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.app.erladmin.ERLApp;
 import com.app.erladmin.R;
+import com.app.erladmin.model.entity.info.FcmData;
 import com.app.erladmin.model.entity.response.BaseResponse;
 import com.app.erladmin.model.entity.response.User;
 import com.app.erladmin.network.RetrofitException;
@@ -660,5 +662,24 @@ public final class AppUtils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static Intent getFcmIntent(FcmData data) {
+        Intent intent = null;
+        Bundle bundle = new Bundle();
+        bundle.putString(AppConstant.IntentKey.NOTIFICATION_TYPE, data.getType());
+        switch (data.getType()) {
+            case "5000":
+                intent = new Intent("com.app.erladmin.view.activity.ChatActivity");
+                break;
+            default:
+                intent = new Intent("com.app.erladmin.view.activity.DashboardActivity");
+        }
+
+        if (intent != null) {
+            intent.putExtras(bundle);
+        }
+
+        return intent;
     }
 }

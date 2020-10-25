@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.app.erladmin.R;
@@ -29,6 +30,8 @@ import com.app.erladmin.model.entity.response.SendMessageResponse;
 import com.app.erladmin.util.AppConstant;
 import com.app.erladmin.util.AppUtils;
 import com.app.erladmin.util.ImagePickerUtility;
+import com.app.erladmin.util.LoginViewModelFactory;
+import com.app.erladmin.util.ResourceProvider;
 import com.app.erladmin.viewModel.DashboardViewModel;
 import com.app.imagepicker.Model.FileWithPath;
 import com.app.utilities.utils.AlertDialogHelper;
@@ -49,30 +52,28 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
     private Context mContext;
     private ChatAdapter adapter;
     private DashboardViewModel dashboardViewModel;
-    private boolean isFromNotification = false;
+    private boolean isFromNotification = false, isUpdate = false;
     private ImagePickerUtility imagePickerUtility;
     private String[] EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private int toUserId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         mContext = this;
-        setupToolbar("", true);
         AppConstant.isOpenChatScreen = true;
         imagePickerUtility = new ImagePickerUtility(this);
 
-//        dashboardViewModel = ViewModelProviders.of(this, new LoginViewModelFactory(new ResourceProvider(getResources()))).get(DashboardViewModel.class);
-//        dashboardViewModel.createView(this);
-//        dashboardViewModel.mSendMessageResponse()
-//                .observe(this, mSendMessageResponse());
-//        dashboardViewModel.getMessagesResponse()
-//                .observe(this, mGetMessagesResponse());
+        dashboardViewModel = ViewModelProviders.of(this, new LoginViewModelFactory(new ResourceProvider(getResources()))).get(DashboardViewModel.class);
+        dashboardViewModel.createView(this);
+        dashboardViewModel.mSendMessageResponse()
+                .observe(this, mSendMessageResponse());
+        dashboardViewModel.getMessagesResponse()
+                .observe(this, mGetMessagesResponse());
 
 //        binding.txtHome.setOnClickListener(this);
         getIntentData();
-
-        loadChat(0, true);
 
         binding.imgSend.setOnClickListener(this);
         binding.imgSelectImage.setOnClickListener(this);
@@ -83,15 +84,20 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         if (getIntent().getExtras() != null) {
             if (getIntent().hasExtra(AppConstant.IntentKey.IS_FROM_NOTIFICATION))
                 isFromNotification = getIntent().getExtras().getBoolean(AppConstant.IntentKey.IS_FROM_NOTIFICATION);
+
+            toUserId = getIntent().getIntExtra(AppConstant.IntentKey.USER_ID, 0);
+            setupToolbar(getIntent().getStringExtra(AppConstant.IntentKey.USER_NAME), true);
+
+            loadChat(0, true);
         }
     }
 
     public void loadChat(int lastMessageId, boolean isProgress) {
-//        userAuthenticationViewModel.getMessages(lastMessageId, isProgress);
+        dashboardViewModel.getMessages(toUserId, lastMessageId, isProgress);
     }
 
     public void sendMessage(String message, String imagePath, boolean isProgress) {
-//        userAuthenticationViewModel.sendMessage(message, imagePath, isProgress);
+        dashboardViewModel.sendMessage(toUserId, message, imagePath, isProgress);
     }
 
     @Override
@@ -129,6 +135,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
                     return;
                 }
                 if (response.isSuccess()) {
+                    isUpdate = true;
                     adapter.addMessage(response.getInfo());
                     scrollToBottom();
                 } else {
@@ -268,6 +275,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             if (adapter != null) {
                 if (adapter.getMessageList().size() > 0)
                     lastMessageId = adapter.getMessageList().get(adapter.getMessageList().size() - 1).getId();
+                isUpdate = true;
                 loadChat(lastMessageId, false);
             }
         }
@@ -301,10 +309,13 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
         if (binding.routPreview.routRootView.getVisibility() == View.VISIBLE) {
             binding.routPreview.routRootView.setVisibility(View.GONE);
         } else {
-            if (isFromNotification)
+            if (isFromNotification) {
                 moveActivity(mContext, DashBoardActivity.class, true, true, null);
-            else
+            } else {
+                if (isUpdate)
+                    setResult(1);
                 finish();
+            }
         }
     }
 
@@ -321,4 +332,5 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             GlideUtil.loadImage(url, imageView, null, null, 0, null);
         }
     }
+
 }

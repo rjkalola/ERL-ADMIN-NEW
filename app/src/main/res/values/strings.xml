@@ -12,7 +12,10 @@
     <!--    <string name="font_family_medium" translatable="false">sans-serif-medium</string>-->
 
     <string name="font_family_regular" translatable="false">fonts/Montserrat-Regular.otf</string>
-    <string name="google_key_api" translatable="false">AIzaSyBcxNZeUe5zUqDVXAvk3fOATaXROrpbUhE</string>
+<!--    <string name="google_key_api" translatable="false">AIzaSyBcxNZeUe5zUqDVXAvk3fOATaXROrpbUhE</string>-->
+    <string name="google_key_api" translatable="false">AIzaSyB7suTehZQP47gKIooRt7ajKUedN_UYAAQ</string>
+
+
 
     <string name="error_access_denied">Access Denied</string>
     <string name="error_bad_request_400">The request could not be understood by the server due to malformed syntax.</string>

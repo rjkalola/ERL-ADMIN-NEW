@@ -34,6 +34,7 @@ import com.app.erladmin.util.AppConstant;
 import com.app.erladmin.util.AppUtils;
 import com.app.erladmin.util.LoginViewModelFactory;
 import com.app.erladmin.util.ResourceProvider;
+import com.app.erladmin.view.activity.ChatActivity;
 import com.app.erladmin.view.activity.CreateClientActivity;
 import com.app.erladmin.viewModel.DashboardViewModel;
 import com.app.utilities.utils.AlertDialogHelper;
@@ -175,8 +176,9 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener, 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case AppConstant.IntentKey.ADD_CLIENT:
-
+            case AppConstant.IntentKey.VIEW_CHAT:
+                if (resultCode == 1)
+                    loadData(true);
                 break;
         }
     }
@@ -184,11 +186,12 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onSelectItem(int position, int action) {
         if (adapter != null) {
-//            Intent intent = new Intent(mContext, CreateClientActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putParcelable(AppConstant.IntentKey.CLIENT_INFO, Parcels.wrap(getChatListData().getInfo().get(position)));
-//            intent.putExtras(bundle);
-//            startActivityForResult(intent, AppConstant.IntentKey.ADD_CLIENT);
+            Intent intent = new Intent(mContext, ChatActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt(AppConstant.IntentKey.USER_ID, adapter.getList().get(position).getTo_user());
+            bundle.putString(AppConstant.IntentKey.USER_NAME, adapter.getList().get(position).getName());
+            intent.putExtras(bundle);
+            startActivityForResult(intent, AppConstant.IntentKey.VIEW_CHAT);
         }
     }
 

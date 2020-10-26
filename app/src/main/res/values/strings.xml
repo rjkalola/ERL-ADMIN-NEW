@@ -34,6 +34,21 @@
 
     //Error Strings
     <string name="ERR100">Parameters Missing</string>
+    <string name="ERR101">Requested data is empty.</string>
+    <string name="ERR102">First parameters must be an array</string>
+    <string name="ERR103">You have entered an invalid email address.</string>
+    <string name="ERR104">You have entered an invalid password.</string>
+    <string name="ERR105">You have entered invalid access code</string>
+    <string name="ERR106">You have added an incorrect current password.</string>
+    <string name="ERR107">You can\'t use the old password.</string>
+    <string name="ERR108">Order not found</string>
+    <string name="ERR109">You can\'t cancel your order. Your order is under process please ask admin to cancel it.</string>
+    <string name="ERR110">Order is not confirm yet</string>
+    <string name="ERR111">Order is not ready yet</string>
+    <string name="ERR112">Address not found</string>
+    <string name="ERR113">Email already registered</string>
+    <string name="ERR114">Phone number already registered</string>
+    <string name="ERR115">Client not found</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>

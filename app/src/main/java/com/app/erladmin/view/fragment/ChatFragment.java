@@ -51,6 +51,7 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener, 
     private DashboardViewModel dashboardViewModel;
     private ChatListResponse chatListData;
     private ChatUserListAdapter adapter;
+    private int unreadMessage = 0;
 
     public static final ChatFragment newInstance() {
         return new ChatFragment();
@@ -177,8 +178,15 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener, 
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case AppConstant.IntentKey.VIEW_CHAT:
-                if (resultCode == 1)
+                if (resultCode == 1) {
                     loadData(true);
+                } else {
+                    if (unreadMessage > 0) {
+                        unreadMessage = 0;
+                        loadData(false);
+                    }
+                }
+
                 break;
         }
     }
@@ -186,6 +194,7 @@ public class ChatFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onSelectItem(int position, int action) {
         if (adapter != null) {
+            unreadMessage = adapter.getList().get(position).getUn_read_msg_count();
             Intent intent = new Intent(mContext, ChatActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt(AppConstant.IntentKey.USER_ID, adapter.getList().get(position).getTo_user());

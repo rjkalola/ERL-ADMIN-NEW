@@ -71,6 +71,7 @@ public final class AppConstant {
         public static final int ME = 1;
         public static final int FRIEND = 2;
         public static final int ORDERS_TAB = 1;
+        public static final int CHAT_TAB = 2;
     }
 
     public static final class LocationMode {

@@ -310,7 +310,9 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener, 
             binding.routPreview.routRootView.setVisibility(View.GONE);
         } else {
             if (isFromNotification) {
-                moveActivity(mContext, DashBoardActivity.class, true, true, null);
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppConstant.IntentKey.TYPE, AppConstant.Type.CHAT_TAB);
+                moveActivity(mContext, DashBoardActivity.class, true, true, bundle);
             } else {
                 if (isUpdate)
                     setResult(1);

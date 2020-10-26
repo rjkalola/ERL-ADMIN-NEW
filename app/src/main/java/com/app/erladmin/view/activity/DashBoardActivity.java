@@ -80,6 +80,11 @@ public class DashBoardActivity extends BaseActivity implements View.OnClickListe
                     binding.appBarLayout.toolBarNavigation.setText(getString(R.string.orders));
                     addFragment(R.id.container, OrdersFragment.newInstance(), false);
                     break;
+                case AppConstant.Type.CHAT_TAB:
+                    binding.navHeader.routChat.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));
+                    binding.appBarLayout.toolBarNavigation.setText(getString(R.string.chat));
+                    addFragment(R.id.container, ChatFragment.newInstance(), false);
+                    break;
             }
         } else {
             binding.navHeader.routDashBoard.setBackgroundColor(mContext.getResources().getColor(R.color.colorNavigationItemSelected));

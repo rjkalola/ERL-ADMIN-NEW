@@ -668,8 +668,15 @@ public final class AppUtils {
         Intent intent = null;
         Bundle bundle = new Bundle();
         bundle.putString(AppConstant.IntentKey.NOTIFICATION_TYPE, data.getType());
+
         switch (data.getType()) {
             case "5000":
+                if (!StringHelper.isEmpty(data.getUser_id()))
+                    bundle.putInt(AppConstant.IntentKey.USER_ID, Integer.parseInt(data.getUser_id()));
+
+                if (!StringHelper.isEmpty(data.getTitle()))
+                    bundle.putString(AppConstant.IntentKey.USER_NAME, data.getTitle());
+
                 intent = new Intent("com.app.erladmin.view.activity.ChatActivity");
                 break;
             default:
